@@ -9,7 +9,7 @@ Links:
 
 ## Information
 
-This Project is a Python GUI application of a IRAC Tort Law Generator. This uses the import of Tkinter (GUI: Graphical User Interface) library for Python and the Python Dictionary method through the law.txt file uploaded. The user can input the data and then it will generate a simplistic IRAC paragph format based on the user input and laws. The GUI can also allow the user to search a law to make sure that the Rule part of the IRAC can be included in the analysis.
+This Project is a Python GUI application of a IRAC Tort Law Generator. This uses the import of Tkinter (GUI: Graphical User Interface) library for Python and the Python Dictionary method through the law.txt file uploaded. The user can input the data and then it will generate a simplistic IRAC paragph format based on the user input and laws. The GUI can also allow the user to search a law to make sure that the Rule part of the IRAC can be included in the analysis. I will gradually update this throughout my studies at UMGC.
 
 ### Contact
 
