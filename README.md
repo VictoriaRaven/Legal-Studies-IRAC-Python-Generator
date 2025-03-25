@@ -39,7 +39,7 @@ who participated in this project.
 - [UMGC BMGT Resources](https://libguides.umgc.edu/c.php?g=318035&p=2123990)
 - [WestLaw Edge](https://signon.thomsonreuters.com/?productid=CBT&viewproductid=CBTINDIGO&lr=0&culture=en-US&returnto=https%3a%2f%2f1.next.westlaw.com%2fCosi%2fSignOn&tracetoken=0323250542440Ufk0Ch3kUO-4Zzly-CUermtp1wNM2QKKIw71eZDoYRzUkRp7ef3XIjClbc6cuKjxIkW7FzpfVzpmqMiPdstNVrOPhnRvLdtY2olRi0T4bZPbaANj-bv8b1n4VyUMfltMTCHLtulV0hI0VVZwLN6Tfwpc4yAL0gA4luq3LVnilDGl1DFfHxjXWrqqVfK4bTmpc8zndBe3FzeIhvzIlXpUClIfqFlCVI81IGSwLZAUUg83xpOD4vdslS_NYUPJJ0A3eeFf7-XQNFlV1n1arAwEqRn5G1EWlpXxggCIenFn12fGyY8VGVCjJpNG5HAVUPja1-Us32o8hRXapWtUP3tfcjILxHA2utJi7y1nXe7pqNcRGcomYEE_gOT9LjOicrGg&bhcp=1)
 - [UMGC Nexis Uni](http://ezproxy.umgc.edu/login?url=http://www.nexisuni.com)
-- Bradley N. Miller, David L. Ranum, and Julie Anderson, *Python Programming in Context*, 3rd ed., Jones & Bartlett Learning, Oct. 2019. [Online Textbook Available](Available: https://www.oreilly.com/library/view/python-programming-in/9781284175578/.)
+- Bradley N. Miller, David L. Ranum, and Julie Anderson, *Python Programming in Context*, 3rd ed., Jones & Bartlett Learning, Oct. 2019. [Online Textbook Available](https://www.oreilly.com/library/view/python-programming-in/9781284175578/.)
  - Thank you!
  - VictoriaRaven
 
