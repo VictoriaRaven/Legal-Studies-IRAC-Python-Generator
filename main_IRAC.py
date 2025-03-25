@@ -1,6 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox
 from law_manager import load_data, get_sorted_law_codes, get_law_description
+# created idea in 2024 and in 2025 modified it
+import ctypes
+# Enable DPI awareness (for high-DPI displays)
+# prevents a Blurry GUI
+if ctypes.windll.shcore.SetProcessDpiAwareness:
+    ctypes.windll.shcore.SetProcessDpiAwareness(1)
 
 # Function to show the law codes in a new window
 def search_law():
