@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
 from law_manager import load_data, get_sorted_law_codes, get_law_description
+from openai import OpenAI
+import openai
+from openai.types.chat import ChatCompletionUserMessageParam
 # created idea in 2024 and in 2025 modified it
 import ctypes
 # Enable DPI awareness (for high-DPI displays)
@@ -35,44 +38,81 @@ def search_law():
     # Bind the law listbox click event
     law_listbox.bind("<ButtonRelease-1>", on_law_code_click)
 
-# Function to analyze and display the pasted text
+# did not include API key as I need to conceal it.
+# I may add flask/server later on.
+# for now you can try it with your own and it should work
+# this project is meant to be simple to comprehend how API keys are used for these cases
+client = OpenAI(
+    api_key="sk-"  # Use your own OpenAI API key
+)
+
 def analyze_text():
     # Get the inserted text from the input fields
-    plaintiff_text = plaintiff_input.get("1.0", "end-1c")
-    defendant_text = defendant_input.get("1.0", "end-1c")
-    issue_text = issue_input.get("1.0", "end-1c")
-    facts_text = facts_input.get("1.0", "end-1c")
-    rule_text = rule_input.get("1.0", "end-1c")
+    plaintiff_text = plaintiff_input.get("1.0", "end-1c").strip()
+    defendant_text = defendant_input.get("1.0", "end-1c").strip()
+    issue_text = issue_input.get("1.0", "end-1c").strip()
+    facts_text = facts_input.get("1.0", "end-1c").strip()
+    rule_text = rule_input.get("1.0", "end-1c").strip()
 
-    # Check if any of the required fields are empty
-    if not plaintiff_text or not defendant_text or not issue_text or not facts_text or not rule_text:
+    # Validate required fields
+    if not all([plaintiff_text, defendant_text, issue_text, facts_text, rule_text]):
         messagebox.showwarning("Input Error", "Please fill out all fields before proceeding.")
-        return  # Stop the function if any field is empty
+        return
 
-    # Extract the law reference (e.g., MD.000)
-    law_reference = rule_text.split()[0] if rule_text else " [Rule not found.] "
+    # Extract law reference from rule input
+    law_reference = rule_text.split()[0] if rule_text else "[Rule not found.]"
 
-    # Retrieve the law description from the dictionary
+    # Get law description from local database
     law_description = get_law_description(law_reference)
 
-    # Generate analysis based on the Issue, Facts, and Rule
-    analysis = (
-        f"The issue is whether {plaintiff_text} can file a(n) {issue_text.lower()} claim (lawsuit) against {defendant_text}. "
-        f"Under the {law_reference}, {law_description} "
-        f"Here, {plaintiff_text} can file this lawsuit under {law_reference} because {facts_text}. "
-        f"Based on these key facts, it demonstrates the element(s) of {issue_text.lower()} under {law_reference}. "
-        f"In conclusion, {plaintiff_text} can file a(n) {issue_text.lower()} claim (lawsuit) under the {law_reference} as the evidence(s) "
-        f"fulfill(s) all the required element(s) of {issue_text.lower()} under {law_reference}."
-    )
+    # Construct prompt for OpenAI
+    prompt = f"""
+You are a legal assistant. Use the IRAC method to analyze the following legal scenario.
 
-    # Combine the input texts into a formatted result string
-    result_text = f"--- Lawsuit Type ---\n{issue_text}\n\n--- Facts ---\n{facts_text}\n\n--- Rule ---\n{rule_text}\n\n--- IRAC Analysis: ---\n\n{analysis}"
+Plaintiff: {plaintiff_text}
+Defendant: {defendant_text}
+Issue: {issue_text}
+Facts: {facts_text}
 
-    # Output the combined text (input + analysis) to the output area
-    output_label.config(state=tk.NORMAL)
-    output_label.delete(1.0, tk.END)  # Clear previous text
-    output_label.insert(tk.END, result_text)  # Insert the combined result
-    output_label.config(state=tk.DISABLED)
+Here is the relevant law:
+- Law Code: {law_reference}
+- Law Description: {law_description}
+
+Format the answer clearly with sections labeled: Issue, Rule, Application, and Conclusion.
+"""
+
+    try:
+        # Call OpenAI
+        messages: list[ChatCompletionUserMessageParam] = [
+            {"role": "user", "content": prompt}
+        ]
+
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            store=True,
+            messages=messages
+        )
+        # Get IRAC analysis from OpenAI
+        irac_output = completion.choices[0].message.content
+
+        # Combine input and AI response
+        result_text = (
+            f"--- Lawsuit Type ---\n{issue_text}\n\n"
+            f"--- Facts ---\n{facts_text}\n\n"
+            f"--- Rule ---\n{rule_text}\n\n"
+            f"--- Law Description ---\n{law_description}\n\n"
+            f"--- IRAC Analysis ---\n\n{irac_output}"
+        )
+
+        # Display in output box
+        output_label.config(state="normal")
+        output_label.delete(1.0, tk.END)
+        output_label.insert(tk.END, result_text)
+        output_label.config(state="disabled")
+
+    except Exception as e:
+        messagebox.showerror("AI Error", f"Failed to generate IRAC analysis:\n{e}")
+
 
 # Function to clear the input fields
 def clear_inputs():
@@ -120,7 +160,7 @@ clear_button.pack()
 
 # Create the output label (text area to display the results)
 tk.Label(root, text="Output:").pack()
-output_label = tk.Text(root, height=20, width=50, wrap=tk.WORD, state=tk.DISABLED)
+output_label = tk.Text(root, height=20, width=50, wrap="word", state="disabled")
 output_label.pack()
 
 # Load laws from the text file when the program starts
