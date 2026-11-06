@@ -10,7 +10,7 @@ Links:
 ## Information
 
 This Project is a Python GUI application of a IRAC Tort Law Generator. This uses the import of Tkinter (GUI: Graphical User Interface) library for Python and the Python Dictionary method through the law.txt file uploaded. The user can input the data and then it will generate a simplistic IRAC paragph format based on the user input and laws. The GUI can also allow the user to search a law to make sure that the Rule part of the IRAC can be included in the analysis. I will gradually update this throughout my studies at UMGC.
-
+- My Repository with my minor studies in Law or Legal Studies realted to this applcation is here: [Legal Studies Minor 2025 Law Other](https://github.com/VictoriaRaven/Legal-Studies-Minor-2025-LAW-Projects-Assgn)
 ### Contact
 
 Feel free to pm me (VictoriaRaven) if you want to use my code under a specific license and without needing to fork my repository.
